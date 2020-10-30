@@ -1,0 +1,55 @@
+type Season
+@model( subscriptions: null )
+@key( name: "SeasonsByDate", fields:["type", "startDate"], queryField: "listSeasonsByDate" )
+{
+	id: ID!
+	number: Int!
+	startDate: String!
+	endDate: String!
+	leaderboard: [Player]
+  type: String!
+}
+
+type SeasonPlayer
+@model( subscriptions: null )
+@key( name: "SeasonsByPoints", fields:["seasonId", "points"], queryField: "listSeasonsByPoints" )
+{
+	id: ID!
+	points: Int!
+	answeredQuestions: [QuestionGame]
+	season: Season!
+  seasonId: ID!
+  player: Player!
+}
+
+
+type Player
+@model( subscriptions: null )
+@key( name: "UserByEmail", fields:["email"], queryField: "getUserByEmail" )
+{
+	id: ID!
+	email: String!
+	name: String!
+	currentSeasons: [SeasonPlayer]
+	allSeasons: [SeasonPlayer]
+}
+
+type Question
+@model( subscriptions: null )
+@key( name: "QuesionsByTopic", fields:["topic"], queryField: "listQuesionsByTopic" )
+{
+	id: ID!
+	question: String!
+	answer: String!
+	options: [String]
+	topic: String!
+}
+
+type QuestionGame
+{
+	question: Question!
+	givenAnswer: String!
+	correct: Boolean!
+	bet: Int!
+	timeToAnswer: String
+}
