@@ -13,12 +13,13 @@ export const createSeason = /* GraphQL */ `
       endDate
       leaderboard {
         id
-        email
         name
-        currentSeasons {
+        email
+        currentSeason {
           id
           points
           seasonId
+          playerId
           createdAt
           updatedAt
         }
@@ -26,6 +27,7 @@ export const createSeason = /* GraphQL */ `
           id
           points
           seasonId
+          playerId
           createdAt
           updatedAt
         }
@@ -50,12 +52,13 @@ export const updateSeason = /* GraphQL */ `
       endDate
       leaderboard {
         id
-        email
         name
-        currentSeasons {
+        email
+        currentSeason {
           id
           points
           seasonId
+          playerId
           createdAt
           updatedAt
         }
@@ -63,6 +66,7 @@ export const updateSeason = /* GraphQL */ `
           id
           points
           seasonId
+          playerId
           createdAt
           updatedAt
         }
@@ -87,12 +91,13 @@ export const deleteSeason = /* GraphQL */ `
       endDate
       leaderboard {
         id
-        email
         name
-        currentSeasons {
+        email
+        currentSeason {
           id
           points
           seasonId
+          playerId
           createdAt
           updatedAt
         }
@@ -100,6 +105,7 @@ export const deleteSeason = /* GraphQL */ `
           id
           points
           seasonId
+          playerId
           createdAt
           updatedAt
         }
@@ -142,8 +148,8 @@ export const createSeasonPlayer = /* GraphQL */ `
         endDate
         leaderboard {
           id
-          email
           name
+          email
           createdAt
           updatedAt
         }
@@ -154,12 +160,13 @@ export const createSeasonPlayer = /* GraphQL */ `
       seasonId
       player {
         id
-        email
         name
-        currentSeasons {
+        email
+        currentSeason {
           id
           points
           seasonId
+          playerId
           createdAt
           updatedAt
         }
@@ -167,12 +174,14 @@ export const createSeasonPlayer = /* GraphQL */ `
           id
           points
           seasonId
+          playerId
           createdAt
           updatedAt
         }
         createdAt
         updatedAt
       }
+      playerId
       createdAt
       updatedAt
     }
@@ -208,8 +217,8 @@ export const updateSeasonPlayer = /* GraphQL */ `
         endDate
         leaderboard {
           id
-          email
           name
+          email
           createdAt
           updatedAt
         }
@@ -220,12 +229,13 @@ export const updateSeasonPlayer = /* GraphQL */ `
       seasonId
       player {
         id
-        email
         name
-        currentSeasons {
+        email
+        currentSeason {
           id
           points
           seasonId
+          playerId
           createdAt
           updatedAt
         }
@@ -233,12 +243,14 @@ export const updateSeasonPlayer = /* GraphQL */ `
           id
           points
           seasonId
+          playerId
           createdAt
           updatedAt
         }
         createdAt
         updatedAt
       }
+      playerId
       createdAt
       updatedAt
     }
@@ -274,8 +286,8 @@ export const deleteSeasonPlayer = /* GraphQL */ `
         endDate
         leaderboard {
           id
-          email
           name
+          email
           createdAt
           updatedAt
         }
@@ -286,12 +298,13 @@ export const deleteSeasonPlayer = /* GraphQL */ `
       seasonId
       player {
         id
-        email
         name
-        currentSeasons {
+        email
+        currentSeason {
           id
           points
           seasonId
+          playerId
           createdAt
           updatedAt
         }
@@ -299,12 +312,14 @@ export const deleteSeasonPlayer = /* GraphQL */ `
           id
           points
           seasonId
+          playerId
           createdAt
           updatedAt
         }
         createdAt
         updatedAt
       }
+      playerId
       createdAt
       updatedAt
     }
@@ -317,9 +332,9 @@ export const createPlayer = /* GraphQL */ `
   ) {
     createPlayer(input: $input, condition: $condition) {
       id
-      email
       name
-      currentSeasons {
+      email
+      currentSeason {
         id
         points
         answeredQuestions {
@@ -340,11 +355,12 @@ export const createPlayer = /* GraphQL */ `
         seasonId
         player {
           id
-          email
           name
+          email
           createdAt
           updatedAt
         }
+        playerId
         createdAt
         updatedAt
       }
@@ -369,11 +385,12 @@ export const createPlayer = /* GraphQL */ `
         seasonId
         player {
           id
-          email
           name
+          email
           createdAt
           updatedAt
         }
+        playerId
         createdAt
         updatedAt
       }
@@ -389,9 +406,9 @@ export const updatePlayer = /* GraphQL */ `
   ) {
     updatePlayer(input: $input, condition: $condition) {
       id
-      email
       name
-      currentSeasons {
+      email
+      currentSeason {
         id
         points
         answeredQuestions {
@@ -412,11 +429,12 @@ export const updatePlayer = /* GraphQL */ `
         seasonId
         player {
           id
-          email
           name
+          email
           createdAt
           updatedAt
         }
+        playerId
         createdAt
         updatedAt
       }
@@ -441,11 +459,12 @@ export const updatePlayer = /* GraphQL */ `
         seasonId
         player {
           id
-          email
           name
+          email
           createdAt
           updatedAt
         }
+        playerId
         createdAt
         updatedAt
       }
@@ -461,9 +480,9 @@ export const deletePlayer = /* GraphQL */ `
   ) {
     deletePlayer(input: $input, condition: $condition) {
       id
-      email
       name
-      currentSeasons {
+      email
+      currentSeason {
         id
         points
         answeredQuestions {
@@ -484,11 +503,12 @@ export const deletePlayer = /* GraphQL */ `
         seasonId
         player {
           id
-          email
           name
+          email
           createdAt
           updatedAt
         }
+        playerId
         createdAt
         updatedAt
       }
@@ -513,11 +533,12 @@ export const deletePlayer = /* GraphQL */ `
         seasonId
         player {
           id
-          email
           name
+          email
           createdAt
           updatedAt
         }
+        playerId
         createdAt
         updatedAt
       }

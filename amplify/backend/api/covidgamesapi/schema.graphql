@@ -1,42 +1,60 @@
 type Season
 @model( subscriptions: null )
 @key( name: "SeasonsByDate", fields:["type", "startDate"], queryField: "listSeasonsByDate" )
+@auth(rules: [
+	{ allow: public, provider: apiKey },
+	{ allow: private, provider: iam }
+])
 {
 	id: ID!
 	number: Int!
 	startDate: String!
 	endDate: String!
 	leaderboard: [Player]
-  type: String!
+  	type: String!
 }
 
 type SeasonPlayer
 @model( subscriptions: null )
 @key( name: "SeasonsByPoints", fields:["seasonId", "points"], queryField: "listSeasonsByPoints" )
+@key( name: "PlayerSeasonByPoints", fields:["playerId", "seasonId", "points"], queryField: "listPlayerSeasonByPoints" )
+@auth(rules: [
+	{ allow: public, provider: apiKey },
+	{ allow: private, provider: iam }
+])
 {
 	id: ID!
 	points: Int!
 	answeredQuestions: [QuestionGame]
 	season: Season!
-  seasonId: ID!
-  player: Player!
+	seasonId: ID!
+	player: Player!
+	playerId: ID!
 }
 
 
 type Player
 @model( subscriptions: null )
 @key( name: "UserByEmail", fields:["email"], queryField: "getUserByEmail" )
+@auth(rules: [
+	{ allow: public, provider: apiKey},
+	{ allow: private, provider: iam }
+])
 {
 	id: ID!
-	email: String!
 	name: String!
-	currentSeasons: [SeasonPlayer]
+	email: String!
+	currentSeason: SeasonPlayer
 	allSeasons: [SeasonPlayer]
 }
 
 type Question
 @model( subscriptions: null )
 @key( name: "QuesionsByTopic", fields:["topic"], queryField: "listQuesionsByTopic" )
+@auth(rules: [
+	{ allow: public, provider: apiKey },
+	{ allow: private, provider: iam }
+])
 {
 	id: ID!
 	question: String!
