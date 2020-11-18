@@ -1,48 +1,50 @@
 import React, {useEffect, useState} from 'react';
 import { Button, Card, CardActions, CardContent, CircularProgress, Grid } from '@material-ui/core';
+import { API, graphqlOperation } from 'aws-amplify';
+import { listQuestions as ListQuestions} from './API/queries';
 
-const questions = [
-    // id: ID!
-	// question: String!
-	// answer: String!
-	// options: [String]
-    // topic: String!
-    {
-        id:"0",
-        question:"Q1",
-        answer:"A1",
-        options:["A1","A2","A3"],
-        topic:"History"
-    },
-    {
-        id:"1",
-        question:"Q1",
-        answer:"A1",
-        options:["A1","A2","A3"],
-        topic:"History"
-    },
-    {
-        id:"2",
-        question:"Q1",
-        answer:"A1",
-        options:["A1","A2","A3"],
-        topic:"Chemistry"
-    },
-    {
-        id:"3",
-        question:"Q1",
-        answer:"A1",
-        options:["A1","A2","A3"],
-        topic:"Math"
-    },
-    {
-        id:"4",
-        question:"Q1",
-        answer:"A1",
-        options:["A1","A2","A3"],
-        topic:"Math"
-    },
-]
+// const questions = [
+//     // id: ID!
+// 	// question: String!
+// 	// answer: String!
+// 	// options: [String]
+//     // topic: String!
+//     {
+//         id:"0",
+//         question:"Q1",
+//         answer:"A1",
+//         options:["A1","A2","A3"],
+//         topic:"History"
+//     },
+//     {
+//         id:"1",
+//         question:"Q1",
+//         answer:"A1",
+//         options:["A1","A2","A3"],
+//         topic:"History"
+//     },
+//     {
+//         id:"2",
+//         question:"Q1",
+//         answer:"A1",
+//         options:["A1","A2","A3"],
+//         topic:"Chemistry"
+//     },
+//     {
+//         id:"3",
+//         question:"Q1",
+//         answer:"A1",
+//         options:["A1","A2","A3"],
+//         topic:"Math"
+//     },
+//     {
+//         id:"4",
+//         question:"Q1",
+//         answer:"A1",
+//         options:["A1","A2","A3"],
+//         topic:"Math"
+//     },
+// ]
 export default function Season() {
     // const [season, setSeason] = useState(questions);
     const [topics, setTopics] = useState([]);
@@ -65,10 +67,22 @@ export default function Season() {
             return topics_data;
         }
         // Get all questions
-        let topics_data = getTopics(questions);
-        console.log('topics_data', topics_data)
-        setTopics(topics_data);
-        setLoading(false);
+        API.graphql(graphqlOperation(ListQuestions))
+        .then( data =>{
+            // console.log('data', data);
+            let topics_data = getTopics(data.data.listQuestions.items);
+            // let topics_data = getTopics(questions);
+            console.log('topics_data', topics_data);
+            setTopics(topics_data);
+            setLoading(false);
+        })
+        .catch( error => {
+            console.log("GRAPHQL ERROR ", error);
+        })
+        // let topics_data = getTopics(questions);
+        // console.log('topics_data', topics_data);
+        // setTopics(topics_data);
+        // setLoading(false);
     },[])
     return (
         <div>
