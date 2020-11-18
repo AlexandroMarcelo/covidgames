@@ -1,0 +1,60 @@
+d85ec442-17a3-4238-ad0b-cf86df45fc64 season1
+mutation MyMutation {
+  createSeason(input: {
+    number:1
+    startDate: "2020-11-01T17:00:00.000Z"
+    endDate: "2020-12-01T17:00:00.000Z"
+    type: "season"
+  }){
+    id
+  }
+}
+
+
+
+f13412c1-647c-4d9b-a26a-ee3fb8769a9d president
+96dbff37-2338-461d-ac2a-eba45baeb7a5 ww2
+mutation createQuestion {
+  createQuestion(input:{
+    question: "Who is the president of Guatemala?"
+    answer: "Alejandro Giammattei"
+    options: ["Alejandro Giammattei", "Andrés Manuel López", "Donald trump"]
+    topic: "History"
+  }){
+    id
+  }
+}
+query listSeason{
+  listSeasonsByDate(type:"season", sortDirection:ASC){
+    items{
+      id
+      startDate
+    }
+  }
+}
+query listSeasonByPoints{
+  listSeasonsByPoints(seasonId:"d85ec442-17a3-4238-ad0b-cf86df45fc64", sortDirection:ASC){
+    items{
+      id
+        points
+        season {
+          number
+        }
+        seasonId
+        player {
+          name
+        }
+    }
+  }
+}
+
+query listQuestionsByTopic{
+  listQuesionsByTopic(topic:"History"){
+    items{
+      id
+      question
+      answer
+      options
+    }
+  }
+}
