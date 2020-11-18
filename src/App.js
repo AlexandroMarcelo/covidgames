@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 // import Login from './Components/Views/Login/Login'
 import Login from './Components/Views/Form'
 import Dashboard from './Components/Views/Dashboard'
+import Play from './Components/Views/Play'
 import NotFound from './Components/Views/NotFound'
 import AuthenticatedRoutes from './Components/AuthenticatedRoutes';
 import LoginRoute from './Components/LoginRoute';
@@ -26,6 +27,10 @@ function App() {
 						<AuthenticatedRoutes
 							exact path="/dashboard" 
 							component={Dashboard}
+							/>
+						<AuthenticatedRoutes
+							exact path="/play/:topic" 
+							component={Play}
 							/>
 						<Route component={NotFound}></Route>
 					</Switch>

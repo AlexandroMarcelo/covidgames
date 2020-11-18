@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Button, Card, CardActions, CardContent, CircularProgress, Grid } from '@material-ui/core';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listQuestions as ListQuestions} from './API/queries';
+import { useHistory } from "react-router-dom";
 
 // const questions = [
 //     // id: ID!
@@ -49,9 +50,9 @@ export default function Season() {
     // const [season, setSeason] = useState(questions);
     const [topics, setTopics] = useState([]);
     const [loading, setLoading] = useState(true);
+    const history = useHistory();
 
     useEffect(() => {
-        setLoading(true);
         const getTopics = (questions) => {
             let topics_data = {};
             for (let i = 0; i < questions.length; i++) {
@@ -69,21 +70,21 @@ export default function Season() {
         // Get all questions
         API.graphql(graphqlOperation(ListQuestions))
         .then( data =>{
-            // console.log('data', data);
             let topics_data = getTopics(data.data.listQuestions.items);
             // let topics_data = getTopics(questions);
-            console.log('topics_data', topics_data);
+            // console.log('topics_data', topics_data);
             setTopics(topics_data);
             setLoading(false);
         })
         .catch( error => {
             console.log("GRAPHQL ERROR ", error);
         })
-        // let topics_data = getTopics(questions);
-        // console.log('topics_data', topics_data);
-        // setTopics(topics_data);
-        // setLoading(false);
     },[])
+
+    const play = (topic) => {
+        history.push("/play/"+topic);
+    }
+
     return (
         <div>
             {!loading?
@@ -98,7 +99,7 @@ export default function Season() {
                                                 {topic}
                                             </CardContent>
                                             <CardActions>
-                                                <Button color="primary" type="submit" style={{margin:"0 auto"}}>Play</Button>
+                                                <Button color="primary" type="submit" style={{margin:"0 auto"}} onClick={()=>{play(topic)}}>Play</Button>
                                             </CardActions>
                                         </Card>
                                     </Grid>
