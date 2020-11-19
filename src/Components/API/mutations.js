@@ -9,3 +9,24 @@ mutation CreatePlayer(
   }
 }
 `;
+export const updateSeasonPlayer = /* GraphQL */ `
+  mutation UpdateSeasonPlayer(
+    $input: UpdateSeasonPlayerInput!
+    $condition: ModelSeasonPlayerConditionInput
+  ) {
+    updateSeasonPlayer(input: $input, condition: $condition) {
+      id
+      points
+    }
+  }
+`;
+export const createSeasonPlayer = /* GraphQL */ `
+  mutation CreateSeasonPlayer(
+    $input: CreateSeasonPlayerInput!
+    $condition: ModelSeasonPlayerConditionInput
+  ) {
+    createSeasonPlayer(input: $input, condition: $condition) {
+      id
+    }
+  }
+`;

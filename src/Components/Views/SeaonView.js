@@ -1,21 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import NavBar from '../NavBar';
-import Seasons from '../Seasons';
+import Season from '../Season';
+import Rank from '../Rank';
+import CurrentSeason from '../CurrentSeason';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listSeasons as ListSeasons} from '../API/queries';
+import { useParams } from "react-router-dom";
 
-export default function Dashboard() {
-    const [seasons, setSeasons] = useState({});
+export default function SeasonView() {
+    const [season, setSeason] = useState({});
     const [loading, setLoading] = useState(true);
+    let { seasonId } = useParams();
+
     useEffect(() => {
         setLoading(true);
         // Get the last season
-        API.graphql(graphqlOperation(ListSeasons))
+        API.graphql(graphqlOperation(ListSeasons, {filter: {id: {eq: seasonId}}}))
         .then( data =>{
-            let season_data = data.data.listSeasons.items;
-            // console.log('topics_data', season_data);
-            setSeasons(season_data);
+            // console.log('asdasdasdasdasdasadsadsfadfsdfsadfsa', data);
+            let season_data = data.data.listSeasons.items[0];
+            setSeason(season_data);
             setLoading(false);
         })
         .catch( error => {
@@ -27,8 +32,10 @@ export default function Dashboard() {
             {!loading?
                 <>
                     <NavBar/>
-                    <h4>Current seasons available</h4>
-                    <Seasons seasons={seasons}/>
+                    <h3>Season {season.number}</h3>
+                    <Season seasonId={season.id}/>
+                    <h3>Rank of Season {season.number}</h3>
+                    <Rank season_id={season.id}/>
                 </>
                 :
                 <CircularProgress/>

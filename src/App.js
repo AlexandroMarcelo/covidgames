@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 // import Login from './Components/Views/Login/Login'
 import Login from './Components/Views/Form'
 import Dashboard from './Components/Views/Dashboard'
+import SeaonView from './Components/Views/SeaonView'
 import Play from './Components/Views/Play'
 import NotFound from './Components/Views/NotFound'
 import AuthenticatedRoutes from './Components/AuthenticatedRoutes';
@@ -29,7 +30,11 @@ function App() {
 							component={Dashboard}
 							/>
 						<AuthenticatedRoutes
-							exact path="/play/:topic" 
+							exact path="/seasons/:seasonId" 
+							component={SeaonView}
+							/>
+						<AuthenticatedRoutes
+							exact path="/play/:topic/:seasonId" 
 							component={Play}
 							/>
 						<Route component={NotFound}></Route>

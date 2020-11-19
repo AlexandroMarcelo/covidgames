@@ -7,7 +7,7 @@ import Slider from '@material-ui/core/Slider';
 
 
 
-export default function Trivia({questions}) {
+export default function Trivia({questions, seasonPlayer, updatePoints, points}) {
     const [bet, setBet] = useState(2);
     const [counter, setCounter] = useState(0);
 
@@ -35,12 +35,17 @@ export default function Trivia({questions}) {
             {questions?
                 <>
                 <NavBar/>
-                
-                    <Grid container direction="row" alignContent="center" alignItems="center" spacing={4}>
-                        
+                    <h4>Total points: {points}</h4>
+                    <Grid item xs={12}>    
                         <Grid item xs={12}>
                         <h3>Bet amount</h3>
                             <Slider 
+                                value={bet}
+                                defaultValue={2}
+                                valueLabelDisplay="auto"
+                                value={bet}
+                                defaultValue={2}
+                                valueLabelDisplay="auto"
                                 value={bet}
                                 defaultValue={2}
                                 valueLabelDisplay="auto"
@@ -51,7 +56,7 @@ export default function Trivia({questions}) {
                                 onChange={handleChange}
                             />
                             <p>{bet}</p>
-                                <Questions  question={questions[counter]} bet={bet} nextQuestion={()=>setCounter(counter + 1)} />
+                                <Questions  question={questions[counter]} bet={bet} nextQuestion={()=>setCounter(counter + 1)} points={points} setPoints={updatePoints} seasonPlayer={seasonPlayer}/>
                                 <br/>
                                 {/*<button onClick={()=>{setCounter(counter + 1)}}>Next</button>*/}
                                 {/*<p>{counter}</p>*/}

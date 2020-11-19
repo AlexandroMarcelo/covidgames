@@ -9,6 +9,9 @@ import Button from '@material-ui/core/Button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { withStyles } from '@material-ui/core/styles';
+import { API, graphqlOperation } from 'aws-amplify';
+import { updateSeasonPlayer as UpdateSeasonPlayer } from '../API/mutations';
+import { useParams } from "react-router-dom";
 
 
 export default function Questions(props) {
@@ -16,6 +19,9 @@ export default function Questions(props) {
 
     const questions = props.question;
     const options = props.question.options;
+    const points = props.points;
+    const season_player_id = props.seasonPlayer.id;
+    let { seasonId } = useParams();
 
     const handleRadioChange = (event) => {
         setValue(event.target.value);
@@ -26,46 +32,76 @@ export default function Questions(props) {
     
     function handleSubmit(event)
     {
-
+        let user_bet = -1;
         event.preventDefault();
-
-        if (value === props.question.answer)
-        {
-            console.log("Correcto");
-            // Sumar puntos que aposto
-            if (props.bet === 0)
+        console.log('points, props', points, props)
+        if ( points >= props.bet ){
+            if (value === props.question.answer)
             {
-                console.log("+" + 2);
+                console.log("Correcto");
+                // Sumar puntos que aposto
+                if (props.bet === 0)
+                {
+                    user_bet = 2;
+                }
+                else if (props.bet === 1)
+                {
+                    user_bet = 4;
+                }
+                else if (props.bet === 2)
+                {
+                    user_bet = 6;
+                }
+                if ( user_bet !== -1 ) {
+                    let new_user_points = points + user_bet;
+                    console.log('new_user_points', new_user_points)
+                    API.graphql(graphqlOperation(UpdateSeasonPlayer, {"input": {"id": season_player_id, "seasonId": seasonId, "points": new_user_points}}))
+                    .then( user_data =>{
+                        console.log('user_data', user_data);
+                        const user_points = user_data.data.updateSeasonPlayer.points;
+                        toast.success("Correct answer! you now have: "+user_points+" points", {
+                            position: toast.POSITION.TOP_CENTER, 
+                            pauseOnHover: false
+                        });
+                        props.setPoints(user_points)
+                        props.nextQuestion();
+                    })
+                    .catch( error => {
+                        console.log("GRAPHQL ERROR ", error);
+                        props.nextQuestion();
+                    })
+                } else {
+                    toast.success("No points won!", {
+                        position: toast.POSITION.TOP_CENTER, 
+                        pauseOnHover: false
+                    });
+                }
+                
             }
-            else if (props.bet === 1)
+            else 
             {
-                console.log("+" + 4);
-            }
-            else if (props.bet === 2)
-            {
-                console.log("+" + 6);
-            }
-
-            toast.success("Respuesta correcta ", {
-                position: toast.POSITION.TOP_CENTER, 
-                pauseOnHover: false
-            });
-
-            props.nextQuestion();
-            
+                console.log('props.bet', props.bet)
+                let new_user_points = points - props.bet;
+                API.graphql(graphqlOperation(UpdateSeasonPlayer, {"input": {"id": season_player_id, "seasonId": seasonId, "points": new_user_points}}))
+                .then( user_data =>{
+                    const user_points = user_data.data.updateSeasonPlayer.points;
+                    toast.error("Incorrect answer! you now have: "+user_points+" points", {
+                        position: toast.POSITION.TOP_CENTER, 
+                        pauseOnHover: false
+                    });
+                    props.setPoints(user_points)
+                    props.nextQuestion();
+                })
+                .catch( error => {
+                    console.log("GRAPHQL ERROR ", error);
+                    props.nextQuestion();
+                })
         }
-        else 
-        {
-            console.log("Incorrecto");
-            // Restar puntos que aposto
-            console.log("-" + props.bet);
-
-            toast.error("Respuesta incorrecta ", {
+        }else {
+            toast.warning("Not enough points!", {
                 position: toast.POSITION.TOP_CENTER, 
                 pauseOnHover: false
             });
-
-            props.nextQuestion();
         }
     }
 

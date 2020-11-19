@@ -1,42 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getSeason = /* GraphQL */ `
-  query GetSeason($id: ID!) {
-    getSeason(id: $id) {
-      id
-      number
-      startDate
-      endDate
-      leaderboard {
-        id
-        name
-        email
-        currentSeason {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
-        allSeasons {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      type
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const listSeasons = /* GraphQL */ `
   query ListSeasons(
     $filter: ModelSeasonFilterInput
@@ -59,8 +23,47 @@ export const listSeasons = /* GraphQL */ `
         type
         createdAt
         updatedAt
+        seasonPlayer {
+          nextToken
+        }
       }
       nextToken
+    }
+  }
+`;
+export const getSeason = /* GraphQL */ `
+  query GetSeason($id: ID!) {
+    getSeason(id: $id) {
+      id
+      number
+      startDate
+      endDate
+      leaderboard {
+        id
+        name
+        email
+        createdAt
+        updatedAt
+        allSeasons {
+          nextToken
+        }
+      }
+      type
+      createdAt
+      updatedAt
+      seasonPlayer {
+        items {
+          id
+          points
+          seasonId
+          playerId
+          type
+          active
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -96,6 +99,9 @@ export const listSeasonsByDate = /* GraphQL */ `
         type
         createdAt
         updatedAt
+        seasonPlayer {
+          nextToken
+        }
       }
       nextToken
     }
@@ -121,6 +127,12 @@ export const getSeasonPlayer = /* GraphQL */ `
         bet
         timeToAnswer
       }
+      seasonId
+      playerId
+      type
+      active
+      createdAt
+      updatedAt
       season {
         id
         number
@@ -136,34 +148,20 @@ export const getSeasonPlayer = /* GraphQL */ `
         type
         createdAt
         updatedAt
+        seasonPlayer {
+          nextToken
+        }
       }
-      seasonId
       player {
         id
         name
         email
-        currentSeason {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
-        allSeasons {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
+        allSeasons {
+          nextToken
+        }
       }
-      playerId
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -183,6 +181,12 @@ export const listSeasonPlayers = /* GraphQL */ `
           bet
           timeToAnswer
         }
+        seasonId
+        playerId
+        type
+        active
+        createdAt
+        updatedAt
         season {
           id
           number
@@ -192,7 +196,6 @@ export const listSeasonPlayers = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        seasonId
         player {
           id
           name
@@ -200,9 +203,59 @@ export const listSeasonPlayers = /* GraphQL */ `
           createdAt
           updatedAt
         }
+      }
+      nextToken
+    }
+  }
+`;
+export const listSeasonByPlayer = /* GraphQL */ `
+  query ListSeasonByPlayer(
+    $seasonId: ID
+    $playerId: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelSeasonPlayerFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSeasonByPlayer(
+      seasonId: $seasonId
+      playerId: $playerId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        points
+        answeredQuestions {
+          givenAnswer
+          correct
+          bet
+          timeToAnswer
+        }
+        seasonId
         playerId
+        type
+        active
         createdAt
         updatedAt
+        season {
+          id
+          number
+          startDate
+          endDate
+          type
+          createdAt
+          updatedAt
+        }
+        player {
+          id
+          name
+          email
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
@@ -234,6 +287,12 @@ export const listSeasonsByPoints = /* GraphQL */ `
           bet
           timeToAnswer
         }
+        seasonId
+        playerId
+        type
+        active
+        createdAt
+        updatedAt
         season {
           id
           number
@@ -243,7 +302,6 @@ export const listSeasonsByPoints = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        seasonId
         player {
           id
           name
@@ -251,9 +309,6 @@ export const listSeasonsByPoints = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        playerId
-        createdAt
-        updatedAt
       }
       nextToken
     }
@@ -285,6 +340,12 @@ export const listPlayerSeasonByPoints = /* GraphQL */ `
           bet
           timeToAnswer
         }
+        seasonId
+        playerId
+        type
+        active
+        createdAt
+        updatedAt
         season {
           id
           number
@@ -294,7 +355,6 @@ export const listPlayerSeasonByPoints = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        seasonId
         player {
           id
           name
@@ -302,21 +362,29 @@ export const listPlayerSeasonByPoints = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        playerId
-        createdAt
-        updatedAt
       }
       nextToken
     }
   }
 `;
-export const getPlayer = /* GraphQL */ `
-  query GetPlayer($id: ID!) {
-    getPlayer(id: $id) {
-      id
-      name
-      email
-      currentSeason {
+export const listSeasonsByUser = /* GraphQL */ `
+  query ListSeasonsByUser(
+    $playerId: ID
+    $type: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelSeasonPlayerFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSeasonsByUser(
+      playerId: $playerId
+      type: $type
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
         id
         points
         answeredQuestions {
@@ -325,6 +393,12 @@ export const getPlayer = /* GraphQL */ `
           bet
           timeToAnswer
         }
+        seasonId
+        playerId
+        type
+        active
+        createdAt
+        updatedAt
         season {
           id
           number
@@ -334,7 +408,6 @@ export const getPlayer = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        seasonId
         player {
           id
           name
@@ -342,11 +415,29 @@ export const getPlayer = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        playerId
-        createdAt
-        updatedAt
       }
-      allSeasons {
+      nextToken
+    }
+  }
+`;
+export const listPlayersBySeason = /* GraphQL */ `
+  query ListPlayersBySeason(
+    $seasonId: ID
+    $type: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelSeasonPlayerFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPlayersBySeason(
+      seasonId: $seasonId
+      type: $type
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
         id
         points
         answeredQuestions {
@@ -355,6 +446,12 @@ export const getPlayer = /* GraphQL */ `
           bet
           timeToAnswer
         }
+        seasonId
+        playerId
+        type
+        active
+        createdAt
+        updatedAt
         season {
           id
           number
@@ -364,7 +461,6 @@ export const getPlayer = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        seasonId
         player {
           id
           name
@@ -372,12 +468,8 @@ export const getPlayer = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        playerId
-        createdAt
-        updatedAt
       }
-      createdAt
-      updatedAt
+      nextToken
     }
   }
 `;
@@ -392,26 +484,37 @@ export const listPlayers = /* GraphQL */ `
         id
         name
         email
-        currentSeason {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
-        allSeasons {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
+        allSeasons {
+          nextToken
+        }
       }
       nextToken
+    }
+  }
+`;
+export const getPlayer = /* GraphQL */ `
+  query GetPlayer($id: ID!) {
+    getPlayer(id: $id) {
+      id
+      name
+      email
+      createdAt
+      updatedAt
+      allSeasons {
+        items {
+          id
+          points
+          seasonId
+          playerId
+          type
+          active
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -434,24 +537,11 @@ export const getUserByEmail = /* GraphQL */ `
         id
         name
         email
-        currentSeason {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
-        allSeasons {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
+        allSeasons {
+          nextToken
+        }
       }
       nextToken
     }

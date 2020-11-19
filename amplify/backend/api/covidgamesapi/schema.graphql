@@ -11,13 +11,17 @@ type Season
 	startDate: String!
 	endDate: String!
 	leaderboard: [Player]
+	seasonPlayer: [SeasonPlayer] @connection( keyName: "bySeason", fields: ["id"] )
   	type: String!
 }
 
 type SeasonPlayer
 @model( subscriptions: null )
+@key( name: "SeasonByPlayer", fields:["seasonId", "playerId"], queryField: "listSeasonByPlayer" )
 @key( name: "SeasonsByPoints", fields:["seasonId", "points"], queryField: "listSeasonsByPoints" )
 @key( name: "PlayerSeasonByPoints", fields:["playerId", "seasonId", "points"], queryField: "listPlayerSeasonByPoints" )
+@key( name: "byPlayer", fields: ["playerId", "type"], queryField: "listSeasonsByUser" )
+@key( name: "bySeason", fields: ["seasonId", "type"], queryField: "listPlayersBySeason" )
 @auth(rules: [
 	{ allow: public, provider: apiKey },
 	{ allow: private, provider: iam }
@@ -26,10 +30,12 @@ type SeasonPlayer
 	id: ID!
 	points: Int!
 	answeredQuestions: [QuestionGame]
-	season: Season!
+	season: Season! @connection( fields: ["seasonId"] )
 	seasonId: ID!
-	player: Player!
+	player: Player! @connection( fields: ["playerId"] )
 	playerId: ID!
+	type: String
+	active: Boolean
 }
 
 
@@ -44,8 +50,7 @@ type Player
 	id: ID!
 	name: String!
 	email: String!
-	currentSeason: SeasonPlayer
-	allSeasons: [SeasonPlayer]
+	allSeasons: [SeasonPlayer] @connection( keyName: "byPlayer", fields: ["id"] )
 }
 
 type Question

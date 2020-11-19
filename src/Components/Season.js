@@ -4,49 +4,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { listQuestions as ListQuestions} from './API/queries';
 import { useHistory } from "react-router-dom";
 
-// const questions = [
-//     // id: ID!
-// 	// question: String!
-// 	// answer: String!
-// 	// options: [String]
-//     // topic: String!
-//     {
-//         id:"0",
-//         question:"Q1",
-//         answer:"A1",
-//         options:["A1","A2","A3"],
-//         topic:"History"
-//     },
-//     {
-//         id:"1",
-//         question:"Q1",
-//         answer:"A1",
-//         options:["A1","A2","A3"],
-//         topic:"History"
-//     },
-//     {
-//         id:"2",
-//         question:"Q1",
-//         answer:"A1",
-//         options:["A1","A2","A3"],
-//         topic:"Chemistry"
-//     },
-//     {
-//         id:"3",
-//         question:"Q1",
-//         answer:"A1",
-//         options:["A1","A2","A3"],
-//         topic:"Math"
-//     },
-//     {
-//         id:"4",
-//         question:"Q1",
-//         answer:"A1",
-//         options:["A1","A2","A3"],
-//         topic:"Math"
-//     },
-// ]
-export default function Season() {
+export default function Season({seasonId}) {
     // const [season, setSeason] = useState(questions);
     const [topics, setTopics] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -82,7 +40,7 @@ export default function Season() {
     },[])
 
     const play = (topic) => {
-        history.push("/play/"+topic);
+        history.push("/play/"+topic+"/"+seasonId);
     }
 
     return (

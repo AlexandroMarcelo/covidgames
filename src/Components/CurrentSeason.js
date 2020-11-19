@@ -47,7 +47,7 @@ export default function CurrentSeason() {
             // Get the user current season
             API.graphql(graphqlOperation(GetUserByEmail, {email:user_email.email}))
             .then( user_data =>{
-                // console.log('data', data);
+                console.log('Aquii', user_data);
                 const season_data = user_data.data.getUserByEmail.items[0];
                 // console.log('user_data', user_data);
                 setSeason(season_data);

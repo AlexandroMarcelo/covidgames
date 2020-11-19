@@ -18,33 +18,6 @@ export const listQuestions = /* GraphQL */ `
     }
   }
 `;
-export const listSeasons = /* GraphQL */ `
-  query ListSeasons(
-    $filter: ModelSeasonFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listSeasons(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        number
-        startDate
-        endDate
-        leaderboard {
-          id
-          name
-          email
-          createdAt
-          updatedAt
-        }
-        type
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const listSeasonsByDate = /* GraphQL */ `
   query ListSeasonsByDate(
     $type: String
@@ -102,12 +75,23 @@ export const listSeasonsByPoints = /* GraphQL */ `
       items {
         id
         points
-        season {
-          number
+        answeredQuestions {
+          givenAnswer
+          correct
+          bet
+          timeToAnswer
         }
         seasonId
+        playerId
+        type
+        createdAt
+        updatedAt
         player {
+          id
           name
+          email
+          createdAt
+          updatedAt
         }
       }
       nextToken
@@ -133,21 +117,13 @@ export const getUserByEmail = /* GraphQL */ `
         id
         name
         email
-        currentSeason {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
         allSeasons {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
+          items {
+            id
+            season{
+              id
+            }
+          }
         }
       }
       nextToken
@@ -174,6 +150,60 @@ export const listQuesionsByTopic = /* GraphQL */ `
         question
         answer
         options
+      }
+      nextToken
+    }
+  }
+`;
+
+export const listSeasonByPlayer = /* GraphQL */ `
+  query ListSeasonByPlayer(
+    $seasonId: ID
+    $playerId: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelSeasonPlayerFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSeasonByPlayer(
+      seasonId: $seasonId
+      playerId: $playerId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        points
+        seasonId
+      }
+      nextToken
+    }
+  }
+`;
+export const listSeasons = /* GraphQL */ `
+  query ListSeasons(
+    $filter: ModelSeasonFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSeasons(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        number
+        startDate
+        endDate
+        leaderboard {
+          id
+          name
+          email
+          createdAt
+          updatedAt
+        }
+        type
+        createdAt
+        updatedAt
       }
       nextToken
     }

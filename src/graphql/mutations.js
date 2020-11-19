@@ -15,28 +15,28 @@ export const createSeason = /* GraphQL */ `
         id
         name
         email
-        currentSeason {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
-        allSeasons {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
+        allSeasons {
+          nextToken
+        }
       }
       type
       createdAt
       updatedAt
+      seasonPlayer {
+        items {
+          id
+          points
+          seasonId
+          playerId
+          type
+          active
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -54,28 +54,28 @@ export const updateSeason = /* GraphQL */ `
         id
         name
         email
-        currentSeason {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
-        allSeasons {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
+        allSeasons {
+          nextToken
+        }
       }
       type
       createdAt
       updatedAt
+      seasonPlayer {
+        items {
+          id
+          points
+          seasonId
+          playerId
+          type
+          active
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -93,28 +93,28 @@ export const deleteSeason = /* GraphQL */ `
         id
         name
         email
-        currentSeason {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
-        allSeasons {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
+        allSeasons {
+          nextToken
+        }
       }
       type
       createdAt
       updatedAt
+      seasonPlayer {
+        items {
+          id
+          points
+          seasonId
+          playerId
+          type
+          active
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -141,6 +141,12 @@ export const createSeasonPlayer = /* GraphQL */ `
         bet
         timeToAnswer
       }
+      seasonId
+      playerId
+      type
+      active
+      createdAt
+      updatedAt
       season {
         id
         number
@@ -156,34 +162,20 @@ export const createSeasonPlayer = /* GraphQL */ `
         type
         createdAt
         updatedAt
+        seasonPlayer {
+          nextToken
+        }
       }
-      seasonId
       player {
         id
         name
         email
-        currentSeason {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
-        allSeasons {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
+        allSeasons {
+          nextToken
+        }
       }
-      playerId
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -210,6 +202,12 @@ export const updateSeasonPlayer = /* GraphQL */ `
         bet
         timeToAnswer
       }
+      seasonId
+      playerId
+      type
+      active
+      createdAt
+      updatedAt
       season {
         id
         number
@@ -225,34 +223,20 @@ export const updateSeasonPlayer = /* GraphQL */ `
         type
         createdAt
         updatedAt
+        seasonPlayer {
+          nextToken
+        }
       }
-      seasonId
       player {
         id
         name
         email
-        currentSeason {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
-        allSeasons {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
+        allSeasons {
+          nextToken
+        }
       }
-      playerId
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -279,6 +263,12 @@ export const deleteSeasonPlayer = /* GraphQL */ `
         bet
         timeToAnswer
       }
+      seasonId
+      playerId
+      type
+      active
+      createdAt
+      updatedAt
       season {
         id
         number
@@ -294,34 +284,20 @@ export const deleteSeasonPlayer = /* GraphQL */ `
         type
         createdAt
         updatedAt
+        seasonPlayer {
+          nextToken
+        }
       }
-      seasonId
       player {
         id
         name
         email
-        currentSeason {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
-        allSeasons {
-          id
-          points
-          seasonId
-          playerId
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
+        allSeasons {
+          nextToken
+        }
       }
-      playerId
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -334,68 +310,21 @@ export const createPlayer = /* GraphQL */ `
       id
       name
       email
-      currentSeason {
-        id
-        points
-        answeredQuestions {
-          givenAnswer
-          correct
-          bet
-          timeToAnswer
-        }
-        season {
-          id
-          number
-          startDate
-          endDate
-          type
-          createdAt
-          updatedAt
-        }
-        seasonId
-        player {
-          id
-          name
-          email
-          createdAt
-          updatedAt
-        }
-        playerId
-        createdAt
-        updatedAt
-      }
-      allSeasons {
-        id
-        points
-        answeredQuestions {
-          givenAnswer
-          correct
-          bet
-          timeToAnswer
-        }
-        season {
-          id
-          number
-          startDate
-          endDate
-          type
-          createdAt
-          updatedAt
-        }
-        seasonId
-        player {
-          id
-          name
-          email
-          createdAt
-          updatedAt
-        }
-        playerId
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
+      allSeasons {
+        items {
+          id
+          points
+          seasonId
+          playerId
+          type
+          active
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -408,68 +337,21 @@ export const updatePlayer = /* GraphQL */ `
       id
       name
       email
-      currentSeason {
-        id
-        points
-        answeredQuestions {
-          givenAnswer
-          correct
-          bet
-          timeToAnswer
-        }
-        season {
-          id
-          number
-          startDate
-          endDate
-          type
-          createdAt
-          updatedAt
-        }
-        seasonId
-        player {
-          id
-          name
-          email
-          createdAt
-          updatedAt
-        }
-        playerId
-        createdAt
-        updatedAt
-      }
-      allSeasons {
-        id
-        points
-        answeredQuestions {
-          givenAnswer
-          correct
-          bet
-          timeToAnswer
-        }
-        season {
-          id
-          number
-          startDate
-          endDate
-          type
-          createdAt
-          updatedAt
-        }
-        seasonId
-        player {
-          id
-          name
-          email
-          createdAt
-          updatedAt
-        }
-        playerId
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
+      allSeasons {
+        items {
+          id
+          points
+          seasonId
+          playerId
+          type
+          active
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -482,68 +364,21 @@ export const deletePlayer = /* GraphQL */ `
       id
       name
       email
-      currentSeason {
-        id
-        points
-        answeredQuestions {
-          givenAnswer
-          correct
-          bet
-          timeToAnswer
-        }
-        season {
-          id
-          number
-          startDate
-          endDate
-          type
-          createdAt
-          updatedAt
-        }
-        seasonId
-        player {
-          id
-          name
-          email
-          createdAt
-          updatedAt
-        }
-        playerId
-        createdAt
-        updatedAt
-      }
-      allSeasons {
-        id
-        points
-        answeredQuestions {
-          givenAnswer
-          correct
-          bet
-          timeToAnswer
-        }
-        season {
-          id
-          number
-          startDate
-          endDate
-          type
-          createdAt
-          updatedAt
-        }
-        seasonId
-        player {
-          id
-          name
-          email
-          createdAt
-          updatedAt
-        }
-        playerId
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
+      allSeasons {
+        items {
+          id
+          points
+          seasonId
+          playerId
+          type
+          active
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
