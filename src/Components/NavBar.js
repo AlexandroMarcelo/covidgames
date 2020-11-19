@@ -17,7 +17,7 @@ export default function Dashboard() {
     }
     return (
         <>
-            <Grid container direction="row" alignContent="center" alignItems="center" style={{backgroundColor:"rgba(0,0,255,.3)"}}>
+            <Grid container direction="row" alignContent="center" alignItems="center" style={{backgroundColor:"rgba(200,230,250,1)"}}>
                 <Grid item xs={4} sm={2}>
                     <h3 onClick={(e)=>{e.preventDefault(); history.push("/dashboard")}} style={{cursor:"pointer", textAlign:"left", padding:"0 0 0 10%"}} >Knowledge Rally!</h3>
                 </Grid>

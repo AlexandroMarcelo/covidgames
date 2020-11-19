@@ -24,6 +24,31 @@
   color: white;
 }
 
+.timer-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text {
+  color: #aaa;
+}
+
+.value {
+  font-size: 40px;
+}
+
+h1 {
+  font-family: "Roboto";
+  text-align: center;
+  margin-bottom: 40px;
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -36,3 +61,4 @@
     transform: rotate(360deg);
   }
 }
+

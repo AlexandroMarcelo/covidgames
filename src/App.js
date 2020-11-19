@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="App">
 			<BrowserRouter> 
-				<div style={{fontFamily:'Nunito'}}>
+				<div >
 					<Switch >
 						<LoginRoute
 							exact path="/" 
